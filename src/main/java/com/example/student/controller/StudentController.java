@@ -11,7 +11,9 @@ import org.springframework.web.multipart.MultipartFile;
 import com.example.student.model.Student;
 import com.example.student.service.StudentService;
 
-@CrossOrigin(origins = "http://localhost:5173")
+//@CrossOrigin(origins = "*") for anyone access
+//@CrossOrigin(origins = "http://localhost:5173")
+//@CrossOrigin("https://fantastic-fairy-0afb5b.netlify.app")
 @RestController
 @RequestMapping("/students")
 public class StudentController {
