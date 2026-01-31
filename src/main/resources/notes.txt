@@ -1,3 +1,21 @@
 
 # docker folder and eclipse folder image sync and store
 docker run -p 8089:8089 -v "%cd%/uploads:/app/uploads" student-management
+
+
+git steps:
+git status
+git init  
+git add . 
+git commit -m "Initial backend commit"
+git remote add origin  https://github.com/faiz-devops2026/student-management.git
+git remote -v      
+git branch -M main   
+git push -u origin main   
+
+
+MYSQLHOST   mysql.railway.internal
+MYSQLPORT   3306
+MYSQLDATABASE railway
+MYSQLUSER    root
+MYSQLPASSWORD           XHhcBQUgMwddLLkVIxoOksURdnrCrRLG
