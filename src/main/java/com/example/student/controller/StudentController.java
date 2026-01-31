@@ -1,13 +1,20 @@
 package com.example.student.controller;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.cloudinary.Cloudinary;
 import com.example.student.model.Student;
 import com.example.student.service.StudentService;
 
@@ -17,6 +24,8 @@ import com.example.student.service.StudentService;
 @RestController
 @RequestMapping("/students")
 public class StudentController {
+	@Autowired
+	private Cloudinary cloudinary;
 
     @Autowired
     private StudentService service;
@@ -48,28 +57,48 @@ public class StudentController {
             @RequestParam MultipartFile image
     ) throws IOException {
 
-        // 🔑 ABSOLUTE path inside container
-        String uploadDir = "/app/uploads/students/";
+    	// for uploading to LOCAL server or docker container
+//        // 🔑 ABSOLUTE path inside container
+//        String uploadDir = "/app/uploads/students/";
+//
+//        File dir = new File(uploadDir);
+//        if (!dir.exists()) {
+//            dir.mkdirs();   // MUST
+//        }
+//
+//        String fileName = System.currentTimeMillis() + "_" + image.getOriginalFilename();
+//        File dest = new File(uploadDir + fileName);
+//
+//        image.transferTo(dest);
+//
+//        Student student = new Student();
+//        student.setName(name);
+//        student.setEmail(email);
+//        student.setAge(age);
+//
+//        // 🔑only filename in DB
+//        student.setImagePath(fileName);
+//
+//        return service.saveStudent(student);
+//    }
+    	// FOR Uploading to CLOUDINARY
+    	Map uploadResult = cloudinary.uploader().upload(
+                image.getBytes(),
+                Map.of("folder", "students")
+        );
 
-        File dir = new File(uploadDir);
-        if (!dir.exists()) {
-            dir.mkdirs();   // MUST
-        }
-
-        String fileName = System.currentTimeMillis() + "_" + image.getOriginalFilename();
-        File dest = new File(uploadDir + fileName);
-
-        image.transferTo(dest);
+        String imageUrl = uploadResult.get("secure_url").toString();
 
         Student student = new Student();
         student.setName(name);
         student.setEmail(email);
         student.setAge(age);
-
-        // 🔑 only filename in DB
-        student.setImagePath(fileName);
+        student.setImagePath(imageUrl); // 🔥 CLOUD URL
 
         return service.saveStudent(student);
     }
+    	
+    	
+    	
 
 }

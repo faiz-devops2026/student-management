@@ -13,9 +13,13 @@ git remote -v
 git branch -M main   
 git push -u origin main   
 
-
+rails cloud for mysql details:
 MYSQLHOST   mysql.railway.internal
 MYSQLPORT   3306
 MYSQLDATABASE railway
 MYSQLUSER    root
 MYSQLPASSWORD           XHhcBQUgMwddLLkVIxoOksURdnrCrRLG
+
+cloudinary cloud name: dxp4zp9id
+API KEY: 449425452255382
+SECRET : v8ZgcmKyVBXj_H2obggYIIDzDvE

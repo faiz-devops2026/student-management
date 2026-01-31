@@ -50,6 +50,12 @@
 			<artifactId>mysql-connector-j</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+		<dependency>
+		<!-- STORE PHOTOS ON CLOUD OF PROJECT -->
+	    <groupId>com.cloudinary</groupId>
+	         <artifactId>cloudinary-http44</artifactId>
+	    <version>1.36.0</version>
+	   </dependency>
 		
 		
 		<dependency>
