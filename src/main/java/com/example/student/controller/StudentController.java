@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.cloudinary.Cloudinary;
 import com.example.student.model.Student;
+import com.example.student.service.SocketService;
 import com.example.student.service.StudentService;
 
 //@CrossOrigin(origins = "*") for anyone access
@@ -29,11 +30,24 @@ public class StudentController {
 
     @Autowired
     private StudentService service;
+    
+    
+ //  ADD THIS
+    @Autowired
+    private SocketService socketService;
+
 
     // save without image
     @PostMapping
     public Student save(@RequestBody Student student) {
-        return service.saveStudent(student);
+       // return service.saveStudent(student);
+    	
+    	 Student saved = service.saveStudent(student);
+
+         //  WebSocket push
+         socketService.sendStudentUpdate("Student Added");
+
+         return saved;
     }
 
     // get all students
@@ -95,7 +109,14 @@ public class StudentController {
         student.setAge(age);
         student.setImagePath(imageUrl); // 🔥 CLOUD URL
 
-        return service.saveStudent(student);
+        //return service.saveStudent(student);
+        
+        Student saved = service.saveStudent(student);
+
+        // 🔥 WebSocket push
+        socketService.sendStudentUpdate("Student Added With Image");
+
+        return saved;
     }
     	
     	
