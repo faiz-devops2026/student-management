@@ -45,7 +45,7 @@ public class StudentController {
     	 Student saved = service.saveStudent(student);
 
          //  WebSocket push
-         socketService.sendStudentUpdate("Student Added");
+         //socketService.sendStudentUpdate("Student Added");
 
          return saved;
     }
